@@ -52,6 +52,9 @@ ln -s "../../lib64/$(basename "$(find lib64 -maxdepth 1 -name 'ld-linux-*.so.*' 
 # Match the existing sysroot policy: external packages provide libnsl/libcrypt.
 rm -f lib64/libnsl* lib64/libcrypt* usr/include/crypt.h usr/include/rpcsvc/yp*
 mkdir -p usr/share
+# Ubuntu's absolute alias points outside the sysroot and may be absent on the
+# build host. Keep locale tools/data self-contained after prefix relocation.
+ln -sfn ../../../etc/locale.alias usr/share/locale/locale.alias
 ln -sf "${PREFIX}/share/zoneinfo" usr/share/zoneinfo
 rm -rf usr/share/man usr/share/doc usr/lib/systemd
 mkdir -p "${PREFIX}/bin"
